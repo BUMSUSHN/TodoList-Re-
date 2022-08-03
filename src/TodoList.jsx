@@ -1,38 +1,32 @@
 import React, { useState } from "react";
 import Todo from "./components/todo/Todo";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./redux/modules/todos";
 
 const TodoList = () => {
+  const dispatch = useDispatch()
   const [title, SetTitle] = useState("");
   const [content, SetContent] = useState("");
-  // 얘는 ID가 없는 상태고
-  const [todoList, SetTodoList] = useState([
-    {
-      //진행중
-      id: 1,
-      title: "리액트 공부하기",
-      content: "리액트 기초를 공부해봅시다.",
-      isDone: false,
-    },
-    {
-      //완료
-      id: 2,
-      title: "리액트 공부하기",
-      content: "리액트 기초를 공부해봅시다.",
-      isDone: true,
-    },
-  ]);
-  // console.log(useState(""));
-  //여기부터 ID 할당 된거고
-  const addTodo = () => {
+
+  //9. 14~16번쨰 줄 가져오기
+  const todoList = useSelector((state) => state.todos.todoList)
+  const abcd = useSelector((state) => state.todos.abcd)
+  const number = useSelector((state) => state.counter.number)
+
+  const onAddTodo = () => {
     const todo = {
       title: title,
       content: content,
       id: todoList.length + 1,
       isDone: false,
     };
-    SetTodoList([...todoList, todo]);
+
+    //10. action을 사용하는거
+    dispatch(addTodo(todo))
   };
+
   //onDeleteHandler가 실행되기 위한 조건은 targetId(매개변수)가 있을 때
   const onDeleteHandler = (targetId) => {
     // console.log(`${targetId}가 삭제되었습니다`);
@@ -45,8 +39,9 @@ const TodoList = () => {
     //교체 전용 변수 (맞교체)
     console.log(typeof newTodoList);
     console.log(newTodoList);
-    SetTodoList(newTodoList);
+    // SetTodoList(newTodoList);
   };
+  
   //state 변경시 렌더링
   const onEditHandler = (targetId) => {
     const newTodoList = todoList.map((todo) => {
@@ -55,7 +50,7 @@ const TodoList = () => {
       }
       return todo;
     });
-    SetTodoList(newTodoList);
+    // SetTodoList(newTodoList);
   };
   // const [onEdit, setOnEdit] = useState(false);
   // const toggleOnEdit = () => setOnEdit(!onEdit);
@@ -77,13 +72,14 @@ const TodoList = () => {
           onChange={(e) => SetContent(e.target.value)}
           value={content}
         />{" "}
-        <button onClick={addTodo}>추가하기</button>
+        <button onClick={onAddTodo}>추가하기</button>
       </Form>
 
       <div>
         <h2>Working..</h2>
+        <h2>{abcd}</h2>
         {todoList.map((todo) => {
-          // console.log(todo.isDone);
+          //  console.log(todo.isDone);
           if (!todo.isDone) {
             return (
               <Todo
