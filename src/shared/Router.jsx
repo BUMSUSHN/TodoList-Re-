@@ -5,7 +5,6 @@ import Header from "../components/Header/Header";
 import { Route, Routes } from "react-router-dom";
 import Detail from "../pages/Detail";
 import Todo from "../components/todo/Todo";
-// import Home from "./pages/Home";
 
 const Router = () => {
   return (
@@ -13,12 +12,7 @@ const Router = () => {
       <div className="App">
         <Box>
           <Header />
-          <TodoList>
-            <Routes>
-              <Route path="/" element={<Todo />}></Route>
-              <Route path="/detail" element={<Detail />}></Route>
-            </Routes>
-          </TodoList>
+          <TodoList />
         </Box>
       </div>
     </>

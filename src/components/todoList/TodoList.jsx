@@ -9,6 +9,7 @@ import { Wrapper } from "./TodoList.styled";
 
 const TodoList = () => {
   const dispatch = useDispatch();
+  //dispatch는 리덕스에 값을 보내주는 것 ,,,, 
   const [title, SetTitle] = useState("");
   const [content, SetContent] = useState("");
 

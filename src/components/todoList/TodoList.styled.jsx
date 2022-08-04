@@ -18,8 +18,10 @@ export const Form = styled.div`
 `;
 
 export const Wrapper = styled.div`
+  justify-content: center;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 70px;
+  
 `;
