@@ -3,7 +3,7 @@ import Todo from "./components/todo/Todo";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addTodo } from "./redux/modules/todos";
+import { addTodo, editTodo, deleteTodo } from "./redux/modules/todos";
 
 const TodoList = () => {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const TodoList = () => {
 
   //9. 14~16번쨰 줄 가져오기
   const todoList = useSelector((state) => state.todos.todoList)
-  const abcd = useSelector((state) => state.todos.abcd)
+  // const abcd = useSelector((state) => state.todos.abcd)
   const number = useSelector((state) => state.counter.number)
 
   const onAddTodo = () => {
@@ -27,35 +27,45 @@ const TodoList = () => {
     dispatch(addTodo(todo))
   };
 
-  //onDeleteHandler가 실행되기 위한 조건은 targetId(매개변수)가 있을 때
-  const onDeleteHandler = (targetId) => {
-    // console.log(`${targetId}가 삭제되었습니다`);
-    //filter는 내가 클릭한 값(배열)을 제외한 나머지 값(배열)만 화면에 뿌려준다.
-    //여기서 newTodoList는 지역변수
-    //알고보니 object(객체)
-    const newTodoList = todoList.filter((todo) => todo.id !== targetId);
-    //기존에 있던거 밀어내고, state를 교체
-    //scope 유효범위
-    //교체 전용 변수 (맞교체)
-    console.log(typeof newTodoList);
-    console.log(newTodoList);
-    // SetTodoList(newTodoList);
-  };
   
-  //state 변경시 렌더링
-  const onEditHandler = (targetId) => {
-    const newTodoList = todoList.map((todo) => {
-      if (todo.id === targetId) {
-        todo.isDone = !todo.isDone;
-      }
-      return todo;
-    });
-    // SetTodoList(newTodoList);
-  };
-  // const [onEdit, setOnEdit] = useState(false);
-  // const toggleOnEdit = () => setOnEdit(!onEdit);
+  const delTodo = (id) => {
+    dispatch(deleteTodo(id))
+  }
 
-  // const [localContent, setLocalContent] = useState(content);
+  const edTodo = (id) => {
+    dispatch(editTodo(id))
+  }
+
+
+  //onDeleteHandler가 실행되기 위한 조건은 targetId(매개변수)가 있을 때
+  // const onDeleteHandler = (targetId) => {
+  //   // console.log(`${targetId}가 삭제되었습니다`);
+  //   //filter는 내가 클릭한 값(배열)을 제외한 나머지 값(배열)만 화면에 뿌려준다.
+  //   //여기서 newTodoList는 지역변수
+  //   //알고보니 object(객체)
+  //   const newTodoList = todoList.filter((todo) => todo.id !== targetId);
+  //   //기존에 있던거 밀어내고, state를 교체
+  //   //scope 유효범위
+  //   //교체 전용 변수 (맞교체)
+  //   console.log(typeof newTodoList);
+  //   console.log(newTodoList);
+  //   // SetTodoList(newTodoList);
+  // };
+  
+  // //state 변경시 렌더링
+  // const onEditHandler = (targetId) => {
+  //   const newTodoList = todoList.map((todo) => {
+  //     if (todo.id === targetId) {
+  //       todo.isDone = !todo.isDone;
+  //     }
+  //     return todo;
+  //   });
+  //   // SetTodoList(newTodoList);
+  // };
+  // // const [onEdit, setOnEdit] = useState(false);
+  // // const toggleOnEdit = () => setOnEdit(!onEdit);
+
+  // // const [localContent, setLocalContent] = useState(content);
 
   return (
     <Layout>
@@ -77,7 +87,7 @@ const TodoList = () => {
 
       <div>
         <h2>Working..</h2>
-        <h2>{abcd}</h2>
+        {/* <h2>{abcd}</h2> */}
         {todoList.map((todo) => {
           //  console.log(todo.isDone);
           if (!todo.isDone) {
@@ -87,14 +97,15 @@ const TodoList = () => {
                 id={todo.id}
                 title={todo.title}
                 content={todo.content}
-                onDeleteHandler={onDeleteHandler}
-                onEditHandler={onEditHandler}
                 isDone={todo.isDone}
+                editTodo={edTodo}
+                deleteTodo={delTodo}
               />
             );
           }
         })}
       </div>
+
       <div>
         <h2>Done..!</h2>
         {todoList.map((todo) => {
@@ -105,9 +116,9 @@ const TodoList = () => {
                 id={todo.id}
                 title={todo.title}
                 content={todo.content}
-                onDeleteHandler={onDeleteHandler}
-                onEditHandler={onEditHandler}
                 isDone={todo.isDone}
+                editTodo={edTodo}
+                deleteTodo={delTodo}
               />
             );
           }
