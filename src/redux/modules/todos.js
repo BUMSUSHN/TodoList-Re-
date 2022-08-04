@@ -65,7 +65,7 @@ const todos = (state = initialState, action) => {
       };
 
     case EDIT_TODO:
-      console.log("여기야");
+      // console.log("여기야");
       const newEditList = state.todoList.map((todo) => {
         if (todo.id === action.payload) {
           todo.isDone = !todo.isDone;
