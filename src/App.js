@@ -4,19 +4,24 @@ import TodoList from "./TodoList";
 import styled from "styled-components";
 import Header from "./components/Header/Header";
 // import Todo from "./components/todo/Todo";
-  
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 
-
-
+//Home이랑 About은 App.js에 자식 컴포넌트이다.
 function App() {
   return (
     <>
-      <div className="input-group">
+      <div className="App">
         <Box>
           <Header />
-          <TodoList/>
+          <TodoList />
         </Box>
-      </div>   
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about/:name" element={<Detail />}></Route>
+        </Routes>
+      </div>
     </>
   );
 }
@@ -30,12 +35,5 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-
-// const Box1 = styled.button`
-//   /* display: flex;
-//   flex-wrap: wrap;
-//   gap: 70px; */
-// `;
 
 export default App;
