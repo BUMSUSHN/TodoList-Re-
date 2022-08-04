@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import Todo from "./components/todo/Todo";
-import styled from "styled-components";
+import Todo from "../todo/Todo";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addTodo, editTodo, deleteTodo } from "./redux/modules/todos";
+import { addTodo, editTodo, deleteTodo } from "../../redux/modules/todos";
+import { Layout } from "./TodoList.styled";
+import { Form } from "./TodoList.styled";
+import { Wrapper } from "./TodoList.styled";
 
 const TodoList = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  //dispatch는 리덕스에 값을 보내주는 것 ,,,, 
   const [title, SetTitle] = useState("");
   const [content, SetContent] = useState("");
 
   //9. 14~16번쨰 줄 가져오기
-  const todoList = useSelector((state) => state.todos.todoList)
+  const todoList = useSelector((state) => state.todos.todoList);
   // const abcd = useSelector((state) => state.todos.abcd)
-  const number = useSelector((state) => state.counter.number)
+  const number = useSelector((state) => state.counter.number);
 
   const onAddTodo = () => {
     const todo = {
@@ -24,18 +27,20 @@ const TodoList = () => {
     };
 
     //10. action을 사용하는거
-    dispatch(addTodo(todo))
+    dispatch(addTodo(todo));
   };
 
-  
   const delTodo = (id) => {
-    dispatch(deleteTodo(id))
-  }
+    dispatch(deleteTodo(id));
+  };
 
   const edTodo = (id) => {
-    dispatch(editTodo(id))
-  }
+    dispatch(editTodo(id));
+  };
 
+  // const showMore = (id) => {
+  //   navigate(`detail/${id}`)
+  // }
 
   //onDeleteHandler가 실행되기 위한 조건은 targetId(매개변수)가 있을 때
   // const onDeleteHandler = (targetId) => {
@@ -51,7 +56,7 @@ const TodoList = () => {
   //   console.log(newTodoList);
   //   // SetTodoList(newTodoList);
   // };
-  
+
   // //state 변경시 렌더링
   // const onEditHandler = (targetId) => {
   //   const newTodoList = todoList.map((todo) => {
@@ -86,64 +91,51 @@ const TodoList = () => {
       </Form>
 
       <div>
-        <h2>Working..</h2>
-        {/* <h2>{abcd}</h2> */}
-        {todoList.map((todo) => {
-          //  console.log(todo.isDone);
-          if (!todo.isDone) {
-            return (
-              <Todo
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                content={todo.content}
-                isDone={todo.isDone}
-                editTodo={edTodo}
-                deleteTodo={delTodo}
-              />
-            );
-          }
-        })}
+        <h2>Working.. ✍(◔◡◔)</h2>
+        <Wrapper>
+          {todoList.map((todo) => {
+            //  console.log(todo.isDone);
+            if (!todo.isDone) {
+              return (
+                <Todo
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  content={todo.content}
+                  isDone={todo.isDone}
+                  editTodo={edTodo}
+                  deleteTodo={delTodo}
+                />
+              );
+            }
+          })}
+        </Wrapper>
       </div>
 
       <div>
-        <h2>Done..!</h2>
-        {todoList.map((todo) => {
-          if (todo.isDone) {
-            return (
-              <Todo
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                content={todo.content}
-                isDone={todo.isDone}
-                editTodo={edTodo}
-                deleteTodo={delTodo}
-              />
-            );
-          }
-        })}
+        <h2>Done..! 🎉╰(*°▽°*)╯</h2>
+        <Wrapper>
+          {todoList.map((todo) => {
+            if (todo.isDone) {
+              return (
+                <Todo
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  content={todo.content}
+                  isDone={todo.isDone}
+                  editTodo={edTodo}
+                  deleteTodo={delTodo}
+                />
+              );
+            }
+          })}
+      </Wrapper>
       </div>
     </Layout>
   );
 };
 //key는 리액트에서 컴포넌트 라이프사이클 돌아갈 때 가지고 가는 값
-const Layout = styled.div`
-  max-width: 1200px;
-  min-width: 800px;
-  margin: 0 auto;
-`;
-
-const Form = styled.div`
-  width: 100%;
-  height: 40px;
-  margin: 20px auto 20px;
-  gap: 70px;
-  display: flex;
-  border: 6px solid teal;
-  border-radius: 12px;
-  padding: 15px;
-`;
 
 export default TodoList;
 // map() 메서드는 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환합니다.
